@@ -1,5 +1,6 @@
 import subprocess
 import tkinter as tk
+from tkinter import messagebox
 from config import API, COVERLETTERS, JOBDESCRIPTION, WORKEXPERIENCE, EDUCATION, MODEL
 
 wrok = WORKEXPERIENCE
@@ -95,11 +96,21 @@ class RunMenu:
                                     command=lambda: self.destroy_and_run(runMain), fg='white', bg='red')
         self.BackButton.place(x=20, y=770)
 
+        def show_popup():
+            popup_window = tk.Toplevel(self.Broot)
+            popup_window.title("Completion")
+            label = tk.Label(popup_window, text="Cover Letter built!")
+            label.pack(pady=15)
+            close_button = tk.Button(popup_window, text="Close", command=popup_window.destroy)
+            close_button.pack(pady=10)
+
         def runnit(x, y):
             with open(descript, 'w') as file:
                 file.write(x)
             command = ['python', MODEL, '--docName', y]
             subprocess.run(command)
+            show_popup()
+            self.destroy_and_run(runMain)
 
         self.runbutt = tk.Button(self.Broot, text='Build Cover-Letter', pady=25, padx=60, font=('Calibri', 15),
                          command=lambda: runnit(self.InfoEnter.get("1.0", tk.END), self.docxentry.get()), fg='white', bg='blue')
