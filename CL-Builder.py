@@ -102,7 +102,7 @@ class RunMenu:
             subprocess.run(command)
 
         self.runbutt = tk.Button(self.Broot, text='Build Cover-Letter', pady=25, padx=60, font=('Calibri', 15),
-                                 command=runnit(self.InfoEnter.get(),self.docxentry.get()), fg='white', bg='blue')
+                         command=lambda: runnit(self.InfoEnter.get("1.0", tk.END), self.docxentry.get()), fg='white', bg='blue')
         self.runbutt.place(x=230, y=700)
 
         self.Broot.mainloop()
@@ -172,7 +172,7 @@ class EditEduMenu:
         self.Kroot.title("Edit Education")
 
         self.destroyed = False
-        self.file_mode_var = tk.StringVar()  # Fix: Use self.
+        self.file_mode_var = tk.StringVar()
 
         def WriteorAdd(x):
             filevar = x
