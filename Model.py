@@ -5,6 +5,7 @@ from docx import Document
 from openai import OpenAI, RateLimitError
 import backoff
 from docx.shared import Pt
+import argparse
 from config import API, COVERLETTERS, JOBDESCRIPTION, WORKEXPERIENCE, EDUCATION
 
 ## HOW TO SET UP
@@ -39,8 +40,12 @@ def Fileread(file):
         jobdescriptiom = fire.read()
     return jobdescriptiom
 
-Filename = input(str('Input name of Cover Letter: '))
-name = Filename+'.docx'
+parser = argparse.ArgumentParser()
+parser.add_argument('--docName', required=True, help='Specify the document name')
+args = parser.parse_args()
+docName = args.docName
+print(docName)
+name = docName+'.docx'
 
 jobdescript = Fileread(jobdir)
 

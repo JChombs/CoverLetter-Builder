@@ -1,6 +1,11 @@
 import subprocess
 import tkinter as tk
-from config import API, COVERLETTERS, JOBDESCRIPTION, WORKEXPERIENCE, EDUCATION
+from config import API, COVERLETTERS, JOBDESCRIPTION, WORKEXPERIENCE, EDUCATION, MODEL
+
+wrok = WORKEXPERIENCE
+jobe = EDUCATION
+descript = JOBDESCRIPTION
+mdoel = MODEL
 
 ### WORK IN PROGRESS
 
@@ -90,8 +95,14 @@ class RunMenu:
                                     command=lambda: self.destroy_and_run(runMain), fg='white', bg='red')
         self.BackButton.place(x=20, y=770)
 
+        def runnit(x, y):
+            with open(descript, 'w') as file:
+                file.write(x)
+            command = ['python', MODEL, '--docName', y]
+            subprocess.run(command)
+
         self.runbutt = tk.Button(self.Broot, text='Build Cover-Letter', pady=25, padx=60, font=('Calibri', 15),
-                                 command='', fg='white', bg='blue')
+                                 command=runnit(self.InfoEnter.get(),self.docxentry.get()), fg='white', bg='blue')
         self.runbutt.place(x=230, y=700)
 
         self.Broot.mainloop()
@@ -109,6 +120,7 @@ class EditWorkMenu:
         self.Kroot.title("Edit Work Experience")
 
         self.destroyed = False
+        self.file_mode_var = tk.StringVar()  # Fix: Use self.
 
         self.klabel = tk.Label(self.Kroot, text="Choose to either", font=("Calibri", 30))
         self.klabel.pack()
@@ -117,11 +129,16 @@ class EditWorkMenu:
         self.overw = tk.Label(self.Kroot, text='Overwrite File:', font=("Calibri", 20))
         self.overw.place(x=550, y=60)
 
+        def WriteorAdd(x):
+            filevar = x
+            return filevar
+
         self.addbutt = tk.Button(self.Kroot, text='Add', pady=20, padx=90, font=('Calibri', 14),
-                                 command=lambda: ' ', fg='white', bg='blue')
+                                 command=lambda: self.file_mode_var.set(WriteorAdd('a')), fg='white', bg='blue')
         self.addbutt.place(x=25, y=95)
+
         self.overbutt = tk.Button(self.Kroot, text='Overwrite', pady=20, padx=90, font=('Calibri', 14),
-                                  command=lambda: ' ', fg='white', bg='blue')
+                                  command=lambda: self.file_mode_var.set(WriteorAdd('w')), fg='white', bg='blue')
         self.overbutt.place(x=470, y=95)
 
         self.InfEnter = tk.Text(self.Kroot, height=30, width=85)
@@ -131,8 +148,13 @@ class EditWorkMenu:
                                     command=lambda: self.destroy_and_run(RunEdit), fg='white', bg='red')
         self.BackButton.place(x=20, y=770)
 
+        def Writefile(filename, mode_var):
+            mode = mode_var.get()
+            with open(filename, mode) as file:
+                file.write(self.InfEnter.get())
+
         self.runbutt = tk.Button(self.Kroot, text='Edit Info', pady=25, padx=60, font=('Calibri', 15),
-                                 command='', fg='white', bg='blue')
+                                 command=lambda: Writefile('wrok.txt', self.file_mode_var.get()), fg='white', bg='blue')
         self.runbutt.place(x=270, y=700)
 
         self.Kroot.mainloop()
@@ -150,6 +172,11 @@ class EditEduMenu:
         self.Kroot.title("Edit Education")
 
         self.destroyed = False
+        self.file_mode_var = tk.StringVar()  # Fix: Use self.
+
+        def WriteorAdd(x):
+            filevar = x
+            return filevar
 
         self.klabel = tk.Label(self.Kroot, text="Choose to either", font=("Calibri", 30))
         self.klabel.pack()
@@ -159,10 +186,10 @@ class EditEduMenu:
         self.overw.place(x=550, y=60)
 
         self.addbutt = tk.Button(self.Kroot, text='Add', pady=20, padx=90, font=('Calibri', 14),
-                                 command=lambda: ' ', fg='white', bg='blue')
+                                 command=lambda: self.file_mode_var.set(WriteorAdd('a')), fg='white', bg='blue')
         self.addbutt.place(x=25, y=95)
         self.overbutt = tk.Button(self.Kroot, text='Overwrite', pady=20, padx=90, font=('Calibri', 14),
-                                  command=lambda: ' ', fg='white', bg='blue')
+                                  command=lambda: self.file_mode_var.set(WriteorAdd('w')), fg='white', bg='blue')
         self.overbutt.place(x=470, y=95)
 
         self.InfEnter = tk.Text(self.Kroot, height=30, width=85)
@@ -172,8 +199,13 @@ class EditEduMenu:
                                     command=lambda: self.destroy_and_run(RunEdit), fg='white', bg='red')
         self.BackButton.place(x=20, y=770)
 
+        def Writefile(filename, mode_var):
+            mode = mode_var.get()
+            with open(filename, mode) as file:
+                file.write(self.InfEnter.get())
+
         self.runbutt = tk.Button(self.Kroot, text='Edit Info', pady=25, padx=60, font=('Calibri', 15),
-                                 command='', fg='white', bg='blue')
+                                 command=lambda: Writefile('jobe.txt', self.file_mode_var.get()), fg='white', bg='blue')
         self.runbutt.place(x=270, y=700)
 
         self.Kroot.mainloop()
