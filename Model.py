@@ -3,7 +3,6 @@ import subprocess
 import os
 from docx import Document
 from openai import OpenAI, RateLimitError
-import backoff
 from docx.shared import Pt
 import argparse
 from config import API, COVERLETTERS, JOBDESCRIPTION, WORKEXPERIENCE, EDUCATION

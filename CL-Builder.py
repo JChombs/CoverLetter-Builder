@@ -142,6 +142,7 @@ class EditWorkMenu:
 
         def WriteorAdd(x):
             filevar = x
+            self.InfEnter.config(state='normal')
             return filevar
 
         self.addbutt = tk.Button(self.Kroot, text='Add', pady=20, padx=90, font=('Calibri', 14),
@@ -152,20 +153,31 @@ class EditWorkMenu:
                                   command=lambda: self.file_mode_var.set(WriteorAdd('w')), fg='white', bg='blue')
         self.overbutt.place(x=470, y=95)
 
-        self.InfEnter = tk.Text(self.Kroot, height=30, width=85)
+        self.InfEnter = tk.Text(self.Kroot, height=30, width=85, state='disabled')
         self.InfEnter.place(x=40, y=180)
 
         self.BackButton = tk.Button(self.Kroot, text='Go Back', pady=20, padx=50, font=('Calibri', 12),
                                     command=lambda: self.destroy_and_run(RunEdit), fg='white', bg='red')
         self.BackButton.place(x=20, y=770)
 
-        def Writefile(filename, mode_var):
-            mode = mode_var.get()
+        def show_popup():
+            popup_window = tk.Toplevel(self.Kroot)
+            popup_window.title("Task Completion")
+            label = tk.Label(popup_window, text="Work Experience information changed")
+            label.pack(pady=15)
+            close_button = tk.Button(popup_window, text="Close", command=popup_window.destroy)
+            close_button.pack(pady=10)
+        
+        def Writefile(filename, mode):
+            show_popup()
             with open(filename, mode) as file:
-                file.write(self.InfEnter.get())
+                file.write(self.InfEnter.get("1.0", tk.END))
+            self.destroy_and_run(RunEdit)
+            
+            
 
         self.runbutt = tk.Button(self.Kroot, text='Edit Info', pady=25, padx=60, font=('Calibri', 15),
-                                 command=lambda: Writefile('wrok.txt', self.file_mode_var.get()), fg='white', bg='blue')
+                                 command=lambda: Writefile(WORKEXPERIENCE, self.file_mode_var.get()), fg='white', bg='blue')
         self.runbutt.place(x=270, y=700)
 
         self.Kroot.mainloop()
@@ -187,6 +199,7 @@ class EditEduMenu:
 
         def WriteorAdd(x):
             filevar = x
+            self.InfEnter.config(state='normal')
             return filevar
 
         self.klabel = tk.Label(self.Kroot, text="Choose to either", font=("Calibri", 30))
@@ -203,20 +216,29 @@ class EditEduMenu:
                                   command=lambda: self.file_mode_var.set(WriteorAdd('w')), fg='white', bg='blue')
         self.overbutt.place(x=470, y=95)
 
-        self.InfEnter = tk.Text(self.Kroot, height=30, width=85)
+        self.InfEnter = tk.Text(self.Kroot, height=30, width=85, state='disabled')
         self.InfEnter.place(x=40, y=180)
 
         self.BackButton = tk.Button(self.Kroot, text='Go Back', pady=20, padx=50, font=('Calibri', 12),
                                     command=lambda: self.destroy_and_run(RunEdit), fg='white', bg='red')
         self.BackButton.place(x=20, y=770)
 
-        def Writefile(filename, mode_var):
-            mode = mode_var.get()
+        def show_popup():
+            popup_window = tk.Toplevel(self.Kroot)
+            popup_window.title("Task Completion")
+            label = tk.Label(popup_window, text="Education information changed")
+            label.pack(pady=15)
+            close_button = tk.Button(popup_window, text="Close", command=popup_window.destroy)
+            close_button.pack(pady=10)
+        
+        def Writefile(filename, mode):
+            show_popup()
             with open(filename, mode) as file:
-                file.write(self.InfEnter.get())
+                file.write(self.InfEnter.get("1.0", tk.END))
+            self.destroy_and_run(RunEdit)
 
         self.runbutt = tk.Button(self.Kroot, text='Edit Info', pady=25, padx=60, font=('Calibri', 15),
-                                 command=lambda: Writefile('jobe.txt', self.file_mode_var.get()), fg='white', bg='blue')
+                                 command=lambda: Writefile(EDUCATION, self.file_mode_var.get()), fg='white', bg='blue')
         self.runbutt.place(x=270, y=700)
 
         self.Kroot.mainloop()
