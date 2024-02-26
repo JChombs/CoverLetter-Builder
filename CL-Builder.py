@@ -13,7 +13,7 @@ mdoel = MODEL
 class MainMenu():
     def __init__(self):
         self.root = tk.Tk()
-        self.root.geometry("800x700")
+        self.root.geometry("800x820")
         self.root.title("Model Main Menu")
         
         self.destroyed = False
@@ -24,13 +24,16 @@ class MainMenu():
         self.Explain.pack()
         self.Explain2 = tk.Label(self.root, text="Please choose between the two options:\n build a cover letter or edit your information for the model", font=("Calibri", 20))
         self.Explain2.pack()
-        self.RunModel = tk.Button(self.root, text='Write a Cover Letter', pady=180, padx=73, font=('Calibri', 20),
+        self.RunModel = tk.Button(self.root, text='Write a Cover Letter', pady=180, padx=70, font=('Calibri', 20),
                                     command=lambda: self.destroy_and_run(runMenu), fg='white', bg='blue')
         self.RunModel.place(x=420, y=300)
 
-        self.EditEducation = tk.Button(self.root, text='Edit your information', pady=180, padx=73, font=('Calibri', 20),
+        self.EditEducation = tk.Button(self.root, text='Edit your information', pady=180, padx=70, font=('Calibri', 20),
                                     command=lambda: self.destroy_and_run(RunEdit), fg='white', bg='blue')
-        self.EditEducation.place(x=0, y=300)
+        self.EditEducation.place(x=2, y=300)
+        
+        self.Disclaimer = tk.Label(self.root, text="DISCLAIMER: This is an AI model, they are not always accurrate\n Please check and review its work", font=("Calibri", 11))
+        self.Disclaimer.place(x=0, y=750)
 
         self.root.mainloop()
 
